@@ -15,7 +15,20 @@ let con;
 app.listen(8070);
 
 //instructions
-app.get("/", (req, res) => res.end("Lets creata a table , try '/createTable'"));
+app.get("/", (req, res) =>
+  res.end(`
+  >> FOLLOW THE INSTRUCTIONS << , 
+
+  > You need to have installed OracleDB in your local machine to run this app,
+  > Please check your console if any error occurd
+  > Always run this app from the first step when you restart the console .
+  > You can change set your own values by editing ' Quries.js' file
+   -------------------------------------------------------
+
+  Lets creata a table , try '/createTable'
+  
+  ex : http://localhost:8070/createTable`)
+);
 
 //create a table
 app.get("/createTable", async (req, res) => {
@@ -36,7 +49,6 @@ app.get("/insertValues", async (req, res) => {
       "insert into users values(001 , 'john' , 'john@123ABCD')"
     );
 
-    console.log(rs);
     res.end("Values added , now try ' /select_values'");
   } catch (error) {
     console.log(error);
@@ -51,12 +63,13 @@ app.get("/select_values", async (req, res) => {
     const { rows } = await con.execute("select * from users");
     res.status(200).end(`
       STATUS: "VALUES ADDED SUCCESSFULLY !",
+
       user_ID: ${rows[0][0]},
       userName: ${rows[0][1]},
       password: ${rows[0][2]},
       ---------------------------
     
-      now update a value ( user name ) , try  'update_values'`);
+      now update a value ( user name ) , try  '/update_values'`);
   } catch (error) {
     console.log(error);
   }
@@ -71,12 +84,15 @@ app.get("/update_values", async (req, res) => {
 
     res.status(200).end(`
     STATUS: "VALUES UPDATED ( user_name ) SUCCESSFULLY !",
+
     user_ID: ${rows[0][0]},
     userName: ${rows[0][1]},
     password: ${rows[0][2]},
+
+    * the user name has been updated as 'doe_john_McMan_KANDY'
     ---------------------------
     
-    now delete a value , try  'delete_values' `);
+    now delete a value , try  '/delete_values' `);
   } catch (error) {
     console.log(error);
   }
@@ -88,7 +104,7 @@ app.get("/delete_values", async (req, res) => {
   try {
     await con.execute(delete_values);
     const rs = await con.execute("select * from users");
-    res.end("value deleted succesfully!");
+    res.end("Value deleted succesfully!");
   } catch (error) {
     console.log(error);
   }

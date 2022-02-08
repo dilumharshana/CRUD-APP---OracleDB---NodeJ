@@ -9,7 +9,7 @@ const quires = {
   delete_values: "DELETE FROM users WHERE user_id = 1",
 
   update_values:
-    "UPDATE users SET username='doe_john_McMan_USA' WHERE user_id = 1 ",
+    "UPDATE users SET username='doe_john_McMan_KANDY' WHERE user_id = 1 ",
 };
 
 module.exports = quires;
