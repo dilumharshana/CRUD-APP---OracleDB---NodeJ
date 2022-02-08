@@ -2,24 +2,20 @@ const oracleDB = require("oracledb");
 require("dotenv").config();
 
 const connectingData = {
-  name: process.env.NAME,
+  user: process.env.USER,
   password: process.env.PASSWORD,
   connectString: process.env.connectString,
 };
 
 //creating connection
 
-let con = null;
-
 const creareConnection = async () => {
   try {
     con = await oracleDB.getConnection(connectingData);
-    console.log("connected to DB");
+    return con;
   } catch (err) {
     console.log(err);
   }
 };
 
-creareConnection();
-
-module.exports = con;
+module.exports = creareConnection;
