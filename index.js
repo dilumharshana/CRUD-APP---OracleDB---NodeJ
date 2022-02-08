@@ -52,13 +52,23 @@ app.get("/select_values", async (req, res) => {
   }
 });
 
+app.get("/update_values", async (req, res) => {
+  try {
+    await con.execute(update_values);
+    const rs = await con.execute("select * from users");
+    res.end("value deleted succesfully!");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.get("/delete_values", async (req, res) => {
   try {
     await con.execute(delete_values);
     const rs = await con.execute("select * from users");
-    console.log(rs);
+    res.end("value deleted succesfully!");
   } catch (error) {
-    res.end(error);
+    console.log(error);
   }
 });
 
